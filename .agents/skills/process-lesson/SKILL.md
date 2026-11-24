@@ -34,14 +34,14 @@ Follow this workflow to turn a raw lesson PDF in `road_to_B1/lessons/` into stru
      - Homework & next-lesson preview (`Huiswerk / Volgende les`)
    - Update `road_to_B1/notes/index.docx` via `scripts/docx_tools.py write` with the new lesson entry, grammar topics, vocab highlights, and upcoming focus.
 
-4. **Create weekly `.docx` practice exercises & live voice brief**
-   - Pipe the worksheet Markdown directly into `python3 scripts/docx_tools.py write road_to_B1/exercises/lesXX_<topic>.docx` with a progressive mix of:
-     - Targeted grammar fill-in-the-blank / transformation drills
-     - Vocabulary & contrast exercises
-     - Natural translation prompts (EN -> NL)
-     - A short free-production prompt
-     - A `<details><summary>Answer Key</summary>...</details>` block at the bottom (automatically rendered in invisible white text on a new page for agent grading).
-   - Pipe a tailored **Live Voice Conversation Brief** directly into `python3 scripts/docx_tools.py write road_to_B1/exercises/lesXX_live_voice_prompt.docx`, ready to copy-paste into Gemini Live / ChatGPT Voice and incorporating the week's grammar/vocab plus active watchlist items from `road_to_B1/notes/index.docx`.
+4. **Create weekly `.docx` practice exercises & live voice brief (100% in Dutch)**
+   - Pipe the worksheet Markdown directly into `python3 scripts/docx_tools.py write road_to_B1/exercises/lesXX_<topic>.docx`. **Write the entire worksheet in clear A2/B1 Dutch** (instructions, hints, exercises, and hidden white-text `Antwoordmodel` — no English instructions or EN->NL translations). Include a progressive mix of:
+     - Invuloefeningen (`hebben`/`zijn`, werkwoordsvormen, signaalwoorden)
+     - Zinnen herschrijven (bijv. presens -> perfectum, `want` -> `omdat`)
+     - Woordenschat- en contrastoefeningen met Nederlandse context
+     - Een korte schrijf- of spreekopdracht
+     - A `<details><summary>Antwoordmodel</summary>...</details>` block at the bottom (automatically rendered in invisible white text on a new page for agent grading).
+   - Pipe a tailored **Live Voice Conversation Brief** (in Dutch) directly into `python3 scripts/docx_tools.py write road_to_B1/exercises/lesXX_live_voice_prompt.docx`, ready to copy-paste into Gemini Live / ChatGPT Voice and incorporating the week's grammar/vocab plus active watchlist items from `road_to_B1/notes/index.docx`.
    - If AnkiConnect is reachable, optionally run `python3 scripts/anki_sync.py inspect --struggling` and weave 1–2 struggling patterns into the worksheet and live voice brief.
 
 5. **Create & validate Anki Cloze cards**

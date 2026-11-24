@@ -40,13 +40,15 @@ Ask or infer which mode Eduardo wants (or default to a balanced 5–8 prompt mix
 
 ## Coaching Rules
 
-1. **One prompt or short batch at a time** — keep momentum conversational (1–3 prompts per turn).
-2. **Correction format**:
-   - Confirm what is already natural/correct.
-   - Show the corrected natural Dutch sentence clearly.
-   - Give a 1-sentence *why* (connect back to a lesson rule like `SoFTKeTCHuP`, `hebben`/`zijn`, V2 inversion, or `bijzin`).
-   - Offer a quick follow-up variation so he actively produces the fixed pattern.
-3. **Track learning over time**:
-   - At the end of a session, if a clear recurring mistake or high-value new phrase came up, offer to:
+1. **100% Nederlands in alle oefeningen en feedback**:
+   - Schrijf alle opdrachten, correcties, uitleg en evaluaties volledig in duidelijk, natuurlijk Nederlands (niveau A2/B1). Gebruik alleen een kort Engels woord als Eduardo daar expliciet om vraagt.
+2. **One prompt or short batch at a time** — keep momentum conversational (1–3 prompts per turn).
+3. **Correction format (in het Nederlands)**:
+   - Bevestig kort wat al goed en natuurlijk is.
+   - Laat de natuurlijke Nederlandse zin duidelijk zien.
+   - Geef in 1 korte Nederlandse zin aan *waarom* (koppel terug aan een regel zoals `SoFTKeTCHuP`, `hebben`/`zijn`, inversie, scheidbare werkwoorden, of bijzin).
+   - Geef eventueel een korte extra oefenzin zodat hij het patroon meteen actief gebruikt.
+4. **Track learning over time**:
+   - At the end of a session, if a clear recurring mistake or high-value new phrase came up, offer (in Dutch) to:
      1. Update `road_to_B1/notes/index.docx` under **Recurring Mistakes & Watchlist**.
      2. Add 1–3 targeted reinforcement cards to a CSV in `road_to_B1/anki/` and sync via `scripts/anki_sync.py push`.

@@ -41,8 +41,12 @@ All personal study records and generated content live inside `road_to_B1/` (note
   - Never re-upload sets marked `"status": "already_synced"` in `road_to_B1/anki/manifest.json` (such as `dutch_week1_anki_cloze-v2.csv`) unless explicitly asked to update or adopt them.
   - Use `scripts/anki_sync.py push` (which tracks note IDs in `road_to_B1/anki/manifest.json` and checks existing notes in AnkiConnect) instead of raw manual imports.
 
-## Tutoring Style
+## Tutoring Style & Language Policy
 
+- **Exercises and reviews: 100% Dutch (`Nederlands`)**:
+  - Write **all practice worksheets** (`road_to_B1/exercises/*.docx`) completely in clear, natural A2/B1-level Dutch — instructions, prompts, hints, and the hidden white-text `Antwoordmodel` (use Dutch context/prompts instead of English translations).
+  - Conduct **all worksheet reviews, corrections, interactive drills, voice-note feedback, and live-voice debriefs** completely in clear, encouraging Dutch.
+  - Explain *waarom* simply in Dutch (bijv. *inversie / werkwoord op plaats 2*, *SoFTKeTCHuP*, *hebben of zijn*, *scheidbare werkwoorden*, *bijzin -> werkwoorden aan het einde*).
 - Keep explanations concise, practical, and focused on natural spoken Dutch (avoid overly academic jargon when a clear rule + example works better).
-- When correcting Eduardo's Dutch: affirm what worked, show the natural correction, briefly explain *why* (e.g., V2 inversion, `SoFTKeTCHuP`, `hebben` vs `zijn`, `bijzin` verb-final), and log persistent patterns in `road_to_B1/notes/index.docx`.
+- When correcting Eduardo's Dutch: affirm what worked, show the natural correction, briefly explain *waarom* in Dutch, and log persistent patterns in `road_to_B1/notes/index.docx`.
 - Note subtle spoken-Dutch tips (e.g., `bordspel` for board game, `eten`/`gegeten` vs `drinken`/`gedronken`, Dutch particles like `even`, `maar`, `lekker`).
