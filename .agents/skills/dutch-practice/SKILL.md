@@ -14,7 +14,7 @@ Use this skill to run focused, encouraging, high-retention Dutch practice sessio
 
 1. Read the running curriculum index & watchlist:
    ```bash
-   python3 scripts/docx_tools.py read road_to_B1/notes/index.docx
+   python3 scripts/docx_tools.py read road_to_B1/index.docx
    ```
 2. If AnkiConnect is available, optionally check struggling cards:
    ```bash
@@ -31,12 +31,12 @@ Ask or infer which mode Eduardo wants (or default to a balanced 5–8 prompt mix
   - When Eduardo drops an audio recording in `road_to_B1/audio/inbox/` (or shares a path), listen directly using `read_file`.
   - Give focused feedback on **pronunciation** (vowel length, `g`/`ch`, `ui`/`eu`/`ij`, word stress, natural rhythm) AND **grammar/word order**.
   - Generate a natural spoken Dutch reply or shadowing clip using `python3 scripts/dutch_tts.py "<Dutch reply>" --play` (saved to `road_to_B1/audio/tutor/` using neural `nl-NL-FennaNeural` / `Maarten`, falling back to macOS `Xander`).
-- **Live Voice session debrief**: When Eduardo pastes a mistake summary or transcript from a Gemini Live / ChatGPT Voice session, log persistent patterns in `road_to_B1/notes/index.docx` and offer to push 3–5 targeted reinforcement Anki cards.
+- **Live Voice session debrief**: When Eduardo pastes a mistake summary or transcript from a Gemini Live / ChatGPT Voice session, log persistent patterns in `road_to_B1/index.docx` and offer to push 3–5 targeted reinforcement Anki cards.
 - **Worksheet review**: Read his completed Google-Drive-synced `.docx` worksheets directly via:
   ```bash
-  python3 scripts/docx_tools.py read road_to_B1/exercises/<file>.docx
+  python3 scripts/docx_tools.py read road_to_B1/lesXX/oefeningen/<file>.docx
   ```
-  (The hidden white-text Answer Key at the bottom is included in the extracted output for fast, accurate grading.)
+  (The hidden white-text `Antwoordmodel` at the bottom is included in the extracted output for fast, accurate grading.)
 
 ## Coaching Rules
 
@@ -50,5 +50,5 @@ Ask or infer which mode Eduardo wants (or default to a balanced 5–8 prompt mix
    - Geef eventueel een korte extra oefenzin zodat hij het patroon meteen actief gebruikt.
 4. **Track learning over time**:
    - At the end of a session, if a clear recurring mistake or high-value new phrase came up, offer (in Dutch) to:
-     1. Update `road_to_B1/notes/index.docx` under **Recurring Mistakes & Watchlist**.
+     1. Update `road_to_B1/index.docx` under **Aandachtspunten & Veelgemaakte Fouten**.
      2. Add 1–3 targeted reinforcement cards to a CSV in `road_to_B1/anki/` and sync via `scripts/anki_sync.py push`.

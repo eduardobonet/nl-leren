@@ -5,10 +5,13 @@ This repository is Eduardo's personal Dutch tutoring companion. It turns weekly 
 ## Project Structure
 
 ### Synced to Google Drive ONLY (gitignored): `road_to_B1/`
-All personal study records and generated content live inside `road_to_B1/` (notes & exercises in **`.docx`** format only — no `.md` files in `road_to_B1/`):
-- `road_to_B1/lessons/` — Original weekly lesson PDFs from Eduardo's tutor (read-only source records).
-- `road_to_B1/notes/` — Structured lesson summaries (`lesXX_YYYY-MM-DD.docx`) plus `index.docx` (running curriculum log, grammar tracker, and recurring mistakes watchlist).
-- `road_to_B1/exercises/` — Weekly practice worksheets (`lesXX_<topic>.docx`, with hidden white-text Answer Keys for agent grading) and live voice conversation briefs (`lesXX_live_voice_prompt.docx`).
+All personal study records and generated content live inside `road_to_B1/` (notes & exercises in **`.docx`** format only — no `.md` files in `road_to_B1/`), organized with **one folder per lesson (`les01/`, `les02/`, ...)**:
+- `road_to_B1/index.docx` — Running curriculum log, grammar tracker, and recurring mistakes watchlist across all lessons.
+- `road_to_B1/lesXX/` — Everything for Lesson `XX` in one folder:
+  - Original weekly lesson PDF from Eduardo's tutor (read-only source record).
+  - `overzicht_YYYY-MM-DD.docx` — Structured lesson summary & grammar/vocab overview.
+  - `live_voice_prompt.docx` — Weekly Dutch live voice conversation brief for Gemini Live / ChatGPT Voice.
+  - `oefeningen/oefening_<onderwerp>.docx` — Practice worksheets in an `oefeningen/` subfolder (100% Dutch, with hidden white-text `Antwoordmodel` for agent grading).
 - `road_to_B1/audio/` — Voice note practice: `inbox/` for Eduardo's Dutch recordings (`.m4a`/`.mp3`/`.wav`, listened to via `read_file`) and `tutor/` for spoken Dutch audio replies & shadowing clips generated via `scripts/dutch_tts.py`.
 - `road_to_B1/anki/` — Anki Cloze CSV files (source of truth), `config.json` (deck & AnkiConnect settings), and `manifest.json` (tracks synced CSVs and Anki note IDs to prevent duplicates).
 
@@ -33,8 +36,11 @@ All personal study records and generated content live inside `road_to_B1/` (note
   #notetype:Cloze
   #tags column:3
   ```
-  - Column 1 (`Text`): Natural spoken Dutch sentence with `{{c1::target::English hint}}` (and optional `{{c2::...}}`). Quote fields containing commas.
-  - Column 2 (`Back Extra`): Clear English translation + concise grammar/usage cue in parentheses.
+  - Column 1 (`Text`): Natural spoken Dutch sentence with `{{c1::target::hint}}` (and optional `{{c2::...}}`). Quote fields containing commas. **Never spoil the answer in the hint**:
+    - For `hebben`/`zijn` auxiliary clozes, ALWAYS use the neutral hint `hebben / zijn` (never write `have`, `am`, `zijn`, `hebben`, `activity`, `destination`, or `change` in the front hint).
+    - For verb/participle clozes, use only a concise meaning cue (never include the Dutch infinitive or participle spelling like `(op-ge-staan)` or `(aan-ge-komen)` in the front hint).
+    - For word-order conjunction clozes (`want` vs `omdat`), use only `because` (never spoil `normal order` / `bijzin` in the front hint).
+  - Column 2 (`Back Extra`): Clear translation + concise Dutch grammar/usage explanation in parentheses (this is where all rule cues belong!).
   - Column 3 (`Tags`): Space-separated lowercase tags starting with the lesson tag (`les1`, `les2`, etc.) followed by grammar/topic tags.
 - **No duplicates**:
   - Always run `python3 scripts/anki_sync.py validate` before pushing.
@@ -44,9 +50,9 @@ All personal study records and generated content live inside `road_to_B1/` (note
 ## Tutoring Style & Language Policy
 
 - **Exercises and reviews: 100% Dutch (`Nederlands`)**:
-  - Write **all practice worksheets** (`road_to_B1/exercises/*.docx`) completely in clear, natural A2/B1-level Dutch — instructions, prompts, hints, and the hidden white-text `Antwoordmodel` (use Dutch context/prompts instead of English translations).
+  - Write **all practice worksheets** (`road_to_B1/lesXX/oefeningen/oefening_*.docx`) completely in clear, natural A2/B1-level Dutch — instructions, prompts, hints, and the hidden white-text `Antwoordmodel` (use Dutch context/prompts instead of English translations).
   - Conduct **all worksheet reviews, corrections, interactive drills, voice-note feedback, and live-voice debriefs** completely in clear, encouraging Dutch.
   - Explain *waarom* simply in Dutch (bijv. *inversie / werkwoord op plaats 2*, *SoFTKeTCHuP*, *hebben of zijn*, *scheidbare werkwoorden*, *bijzin -> werkwoorden aan het einde*).
 - Keep explanations concise, practical, and focused on natural spoken Dutch (avoid overly academic jargon when a clear rule + example works better).
-- When correcting Eduardo's Dutch: affirm what worked, show the natural correction, briefly explain *waarom* in Dutch, and log persistent patterns in `road_to_B1/notes/index.docx`.
+- When correcting Eduardo's Dutch: affirm what worked, show the natural correction, briefly explain *waarom* in Dutch, and log persistent patterns in `road_to_B1/index.docx`.
 - Note subtle spoken-Dutch tips (e.g., `bordspel` for board game, `eten`/`gegeten` vs `drinken`/`gedronken`, Dutch particles like `even`, `maar`, `lekker`).

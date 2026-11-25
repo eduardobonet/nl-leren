@@ -93,6 +93,19 @@ def card_key(text: str) -> str:
     return hashlib.sha1(normalized.encode("utf-8")).hexdigest()[:12]
 
 
+def plain_sentence(text: str) -> str:
+    """Strip Cloze markup {{cN::answer::hint}} -> answer for stable matching across hint edits."""
+    def _repl(match: re.Match[str]) -> str:
+        return match.group(2).split("::", 1)[0]
+
+    rendered = CLOZE_RE.sub(_repl, text)
+    return " ".join(rendered.strip().lower().split())
+
+
+def sentence_key(text: str) -> str:
+    return "s:" + hashlib.sha1(plain_sentence(text).encode("utf-8")).hexdigest()[:12]
+
+
 def parse_anki_csv(path: Path) -> tuple[dict[str, str], list[dict[str, Any]]]:
     """Parse an Anki Cloze CSV with #header directives."""
     headers: dict[str, str] = {}
@@ -350,10 +363,29 @@ def cmd_push(args: argparse.Namespace) -> int:
         )
         notes_map: dict[str, int] = entry.setdefault("notes", {})
 
+        # Preload existing tracked notes by plain sentence so hint/cloze edits update in place.
+        tracked_by_sentence: dict[str, tuple[str, int]] = {}
+        tracked_ids = [nid for nid in notes_map.values() if isinstance(nid, int)]
+        if tracked_ids:
+            id_to_mkey = {nid: mk for mk, nid in notes_map.items()}
+            for info in anki_invoke("notesInfo", {"notes": tracked_ids}):
+                if info and info.get("noteId"):
+                    tnid = int(info["noteId"])
+                    cur_txt = info["fields"].get(text_field, {}).get("value", "").strip()
+                    if cur_txt:
+                        tracked_by_sentence[sentence_key(cur_txt)] = (id_to_mkey[tnid], tnid)
+
         print(f"\nProcessing {path.name} -> deck '{deck}' ({len(cards)} cards):")
         for card in cards:
             key = card_key(card["text"])
-            nid = notes_map.get(key)
+            skey = sentence_key(card["text"])
+            nid = notes_map.get(skey) or notes_map.get(key)
+            if nid is None and skey in tracked_by_sentence:
+                old_key, matched_nid = tracked_by_sentence[skey]
+                nid = matched_nid
+                if not args.dry_run:
+                    notes_map.pop(old_key, None)
+                    notes_map[skey] = nid
             fields = {text_field: card["text"], extra_field: card["extra"]}
             tags = card["tags"]
 
@@ -361,7 +393,7 @@ def cmd_push(args: argparse.Namespace) -> int:
                 existing_nid = find_existing_note_id(card["text"], text_field)
                 if existing_nid is not None:
                     nid = existing_nid
-                    notes_map[key] = nid
+                    notes_map[skey] = nid
                     total_adopted += 1
                     print(f"  [adopt]   line {card['line']} -> existing note {nid}")
 
@@ -411,7 +443,7 @@ def cmd_push(args: argparse.Namespace) -> int:
                         }
                     },
                 )
-                notes_map[key] = int(new_id)
+                notes_map[skey] = int(new_id)
                 total_added += 1
                 print(f"  [add]     line {card['line']} -> note {new_id}")
 
